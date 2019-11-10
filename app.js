@@ -1,24 +1,54 @@
+// Holds the items in the cart
 const cart = [];
-function test(test, test2) {}
 
 function addItem(name, price) {
     const item = {
-        name: name,
-        price: price,
+        name,
+        price,
         quantity: 1
     };
+
+    for (let i = 0; i < cart.length; i++) {
+        if (cart[i].name === name) {
+            cart[i].quantity += 1;
+            return;
+        }
+    }
 
     cart.push(item);
 }
 
-function showItems() {
-    console.log(`You have ${cart.length} items in your cart`);
+// Checks to see if the item is the same to add quanity
+function getQuantity() {
+    let quantity = 0;
+    for (let i = 0; i < cart.length; i++) {
+        quantity += cart[i].quantity;
+    }
 
+    return quantity;
+}
+
+// Calculates the total
+function calcTotal() {
+    let total = 0;
+    for (let i = 0; i < cart.length; i++) {
+        total += cart[i].price * cart[i].quantity;
+    }
+
+    return total.toFixed(2);
+}
+
+function showItems() {
+    console.log(`You have ${getQuantity()} items in your cart`);
+
+    // Lists out the item & quantity
     for (let i = 0; i < cart.length; i++) {
         console.log(`Item: ${cart[i].name} $${cart[i].price} x ${cart[i].quantity}`);
     }
-}
 
+    console.log(`Total cost: $${calcTotal()}`);
+}
+addItem('Apple', 10);
 addItem('Apple', 10);
 addItem('Orange', 10);
 
