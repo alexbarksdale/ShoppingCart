@@ -8,17 +8,6 @@ const itemPrice = document.getElementById('item-price');
 // Holds the items in the cart
 const cart = [];
 
-// Handle clicks on list
-itemList.onclick = event => {
-    if (event.target && event.target.classList.contains('remove')) {
-        //                       ..dataset.(x)   x = data-(x)=""
-        const name = event.target.dataset.name; // data-name=""
-
-        //? Doesn't work unless you define the quantity for remove
-        removeItem(name, 1);
-    }
-};
-
 // Adds item to list
 addForm.onsubmit = event => {
     event.preventDefault();
@@ -26,6 +15,22 @@ addForm.onsubmit = event => {
     const price = itemPrice.value;
 
     addItem(name, price);
+};
+
+// Handle clicks on list
+itemList.onclick = event => {
+    if (event.target && event.target.classList.contains('remove')) {
+        //                       ..dataset.(x)   x = data-(x)=""
+        const name = event.target.dataset.name; // data-name=""
+
+        removeItem(name);
+    } else if (event.target && event.target.classList.contains('add-one')) {
+        const name = event.target.dataset.name;
+        addItem(name);
+    } else if (event.target && event.target.classList.contains('remove-one')) {
+        const name = event.target.dataset.name;
+        removeItem(name, 1);
+    }
 };
 
 // Adds item to cart
@@ -77,7 +82,7 @@ function removeItem(name, quantity = 0) {
             }
 
             // Removes item if there 0 items
-            if (cart[i].quantity < 1 || cart[i].quantity === 0) {
+            if (cart[i].quantity < 1 || quantity === 0) {
                 cart.splice(i, 1);
             }
             showItems();
@@ -105,6 +110,8 @@ function showItems() {
         <li> 
         Item: ${name} $${price} x ${quantity} Total: $${total} 
         <button class="remove" data-name="${name}">Remove</button>
+        <button class="add-one" data-name="${name}">+</button>
+        <button class="remove-one" data-name="${name}">-</button>
         </li>`;
     }
 
