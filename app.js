@@ -33,6 +33,16 @@ itemList.onclick = event => {
     }
 };
 
+// Handle change events on update input
+itemList.onchange = event => {
+    if (event.target && event.target.classList.contains('update')) {
+        const name = event.target.dataset.name;
+        const quantity = parseInt(event.target.value);
+
+        updateCart(name, quantity);
+    }
+};
+
 // Adds item to cart
 function addItem(name, price) {
     const item = {
@@ -85,6 +95,25 @@ function removeItem(name, quantity = 0) {
             if (cart[i].quantity < 1 || quantity === 0) {
                 cart.splice(i, 1);
             }
+
+            showItems();
+
+            //? Why does this need to be here?
+            return;
+        }
+    }
+}
+
+function updateCart(name, quantity) {
+    for (let i = 0; i < cart.length; i++) {
+        if (cart[i].name === name) {
+            if (cart[i].quantity <= 0) {
+                removeItem(name);
+                //? Why does this need to be here?
+                return;
+            }
+
+            cart[i].quantity = quantity;
             showItems();
 
             //? Why does this need to be here?
@@ -112,6 +141,7 @@ function showItems() {
         <button class="remove" data-name="${name}">Remove</button>
         <button class="add-one" data-name="${name}">+</button>
         <button class="remove-one" data-name="${name}">-</button>
+        <input class="update" type="number" min="0" data-name="${name}"></input>
         </li>`;
     }
 
