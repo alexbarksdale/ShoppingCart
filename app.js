@@ -1,3 +1,7 @@
+const itemList = document.getElementById('item-list');
+const totalItems = document.getElementById('total-items');
+const totalCost = document.getElementById('total-cart-cost');
+
 // Holds the items in the cart
 const cart = [];
 
@@ -31,7 +35,7 @@ function getQuantity() {
 }
 
 // Calculates the total
-function calcTotal() {
+function cartTotal() {
     let total = 0;
     for (let i = 0; i < cart.length; i++) {
         total += cart[i].price * cart[i].quantity;
@@ -60,19 +64,21 @@ function removeItem(name, quantity = 0) {
 }
 
 function showItems() {
-    console.log(`You have ${getQuantity()} items in your cart`);
+    let itemString = '';
 
-    // Lists out the item & quantity
     for (let i = 0; i < cart.length; i++) {
-        console.log(`Item: ${cart[i].name} $${cart[i].price} x ${cart[i].quantity}`);
+        total = cart[i].price * cart[i].quantity;
+
+        itemString += `<li> Item: ${cart[i].name} $${cart[i].price} x ${cart[i].quantity} Total: ${total} </li>`;
     }
 
-    console.log(`Total cost: $${calcTotal()}`);
+    totalItems.innerHTML = `You have ${getQuantity()} items in your cart`;
+    itemList.innerHTML = itemString;
+    totalCost.innerHTML = `Toal cost: ${cartTotal()}`;
 }
 
 addItem('Apple', 10);
 addItem('Apple', 10);
 addItem('Orange', 10);
-removeItem('Apple', 1);
 
 showItems();
