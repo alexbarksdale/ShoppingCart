@@ -5,8 +5,7 @@ const itemPrice = document.getElementById('item-price');
 const addForm = document.getElementById('add-form');
 const itemList = document.getElementById('item-list');
 
-// Holds the items in the cart
-const cart = [];
+//! --------[EVENT HANDLERS]-------- \\
 
 // Adds item to list
 addForm.onsubmit = event => {
@@ -42,6 +41,10 @@ itemList.onchange = event => {
         updateCart(name, quantity);
     }
 };
+
+//! --------[FUNCTIONS]-------- \\
+// Holds the items in the cart
+const cart = [];
 
 // Adds item to cart
 function addItem(name, price) {
@@ -138,7 +141,7 @@ function showItems() {
         itemString += `
         <li> 
         <span>
-        Item: ${name} $${price.toFixed(2)} x ${quantity} <br> - Total: $${total} 
+        Item: ${name} $${price} x ${quantity} <br> - Total: $${total} 
         </span>
         
         <span>
