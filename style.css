@@ -1,0 +1,43 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+    width: 800px;
+    margin: auto;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+input {
+    padding: 0.5em;
+    font-size: 1em;
+    border: 1px solid;
+    border-radius: 8px;
+}
+
+button {
+    color: #fff;
+    background-color: #484848;
+    min-width: 2.5em;
+    border-radius: 8px;
+    font-size: 0.8em;
+    padding: 0.3em;
+}
+
+#item-list > li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+#total-cart-cost {
+    border-top: 1px solid #484848;
+    padding-top: 30px;
+}

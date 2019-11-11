@@ -1,47 +1,12 @@
-const itemList = document.getElementById('item-list');
 const totalItems = document.getElementById('total-items');
 const totalCartCost = document.getElementById('total-cart-cost');
-const addForm = document.getElementById('add-form');
 const itemName = document.getElementById('item-name');
 const itemPrice = document.getElementById('item-price');
+const addForm = document.getElementById('add-form');
+const itemList = document.getElementById('item-list');
 
 // Holds the items in the cart
 const cart = [];
-
-// Adds item to list
-addForm.onsubmit = event => {
-    event.preventDefault();
-    const name = itemName.value;
-    const price = itemPrice.value;
-
-    addItem(name, price);
-};
-
-// Handle clicks on list
-itemList.onclick = event => {
-    if (event.target && event.target.classList.contains('remove')) {
-        //                       ..dataset.(x)   x = data-(x)=""
-        const name = event.target.dataset.name; // data-name=""
-
-        removeItem(name);
-    } else if (event.target && event.target.classList.contains('add-one')) {
-        const name = event.target.dataset.name;
-        addItem(name);
-    } else if (event.target && event.target.classList.contains('remove-one')) {
-        const name = event.target.dataset.name;
-        removeItem(name, 1);
-    }
-};
-
-// Handle change events on update input
-itemList.onchange = event => {
-    if (event.target && event.target.classList.contains('update')) {
-        const name = event.target.dataset.name;
-        const quantity = parseInt(event.target.value);
-
-        updateCart(name, quantity);
-    }
-};
 
 // Adds item to cart
 function addItem(name, price) {
@@ -133,15 +98,20 @@ function showItems() {
             assign them to the variables
         */
         const { name, price, quantity } = cart[i];
-        const total = cart[i].price * cart[i].quantity;
+        const total = (cart[i].price * cart[i].quantity).toFixed(2);
 
         itemString += `
         <li> 
-        Item: ${name} $${price} x ${quantity} Total: $${total} 
+        <span>
+        Item: ${name} $${price.toFixed(2)} x ${quantity} <br> - Total: $${total} 
+        </span>
+        
+        <span>
         <button class="remove" data-name="${name}">Remove</button>
         <button class="add-one" data-name="${name}">+</button>
         <button class="remove-one" data-name="${name}">-</button>
         <input class="update" type="number" min="0" data-name="${name}"></input>
+        </span>
         </li>`;
     }
 
@@ -150,7 +120,7 @@ function showItems() {
     totalCartCost.innerHTML = `Toal cost: ${cartTotal()}`;
 }
 
-addItem('Apple', 10);
+addItem('Apple', 10.674);
 addItem('Apple', 10);
 addItem('Orange', 10);
 removeItem('Apple', 1);

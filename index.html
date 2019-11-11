@@ -10,33 +10,35 @@
 
 <body>
 
-    <form id="add-form">
-        <label for="">
-            Name
-            <input id="item-name" type="text" placeholder="Item name">
-        </label>
+    <div class="container">
+        <form id="add-form">
+            <label for="">
+                Name
+                <input id="item-name" type="text" placeholder="Item name">
+            </label>
 
-        <label for="">
-            Price:
-            <input id="item-price" type="number" placeholder="Enter amount" step="0.01">
-        </label>
+            <label for="">
+                Price:
+                <input id="item-price" type="number" placeholder="Enter amount" step="0.01">
+            </label>
 
-        <button type="submit">Add Item</button>
-    </form>
+            <button type="submit">Add Item</button>
+        </form>
 
-    <h1 id="total-items">
-        <!-- Item Count -->
-    </h1>
+        <h1 id="total-items">
+            <!-- Item Count -->
+        </h1>
 
-    <ul id="item-list">
-        <!-- Cart Items -->
-    </ul>
+        <ul id="item-list">
+            <!-- Cart Items -->
+        </ul>
 
-    <h3 id="total-cart-cost">
-        <!-- Cart cost -->
-    </h3>
-
-    <script src="app.js"></script>
+        <h3 id="total-cart-cost">
+            <!-- Cart cost -->
+        </h3>
+    </div>
+    <script type="module" src="app.js"></script>
+    <script src="EventHandlers.js"></script>
 </body>
 
 </html>
