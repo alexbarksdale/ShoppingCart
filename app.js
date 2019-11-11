@@ -1,9 +1,32 @@
 const itemList = document.getElementById('item-list');
 const totalItems = document.getElementById('total-items');
-const totalCost = document.getElementById('total-cart-cost');
+const totalCartCost = document.getElementById('total-cart-cost');
+const addForm = document.getElementById('add-form');
+const itemName = document.getElementById('item-name');
+const itemPrice = document.getElementById('item-price');
 
 // Holds the items in the cart
 const cart = [];
+
+// Handle clicks on list
+itemList.onclick = event => {
+    if (event.target && event.target.classList.contains('remove')) {
+        //                       ..dataset.(x)   x = data-(x)=""
+        const name = event.target.dataset.name; // data-name=""
+
+        //? Doesn't work unless you define the quantity for remove
+        removeItem(name, 1);
+    }
+};
+
+// Adds item to list
+addForm.onsubmit = event => {
+    event.preventDefault();
+    const name = itemName.value;
+    const price = itemPrice.value;
+
+    addItem(name, price);
+};
 
 // Adds item to cart
 function addItem(name, price) {
@@ -17,11 +40,12 @@ function addItem(name, price) {
     for (let i = 0; i < cart.length; i++) {
         if (cart[i].name === name) {
             cart[i].quantity += 1;
+            showItems();
             return;
         }
     }
-
     cart.push(item);
+    showItems();
 }
 
 // Gets the amount of items in the cart
@@ -56,6 +80,7 @@ function removeItem(name, quantity = 0) {
             if (cart[i].quantity < 1 || cart[i].quantity === 0) {
                 cart.splice(i, 1);
             }
+            showItems();
 
             //? Why does this need to be here?
             return;
@@ -64,21 +89,33 @@ function removeItem(name, quantity = 0) {
 }
 
 function showItems() {
+    // Holds cart items
     let itemString = '';
 
     for (let i = 0; i < cart.length; i++) {
-        total = cart[i].price * cart[i].quantity;
+        /*
+        Cart object (cart[i]): {name: 'Apple', price: 1, quantity: 2}
+            - If the variables match the names of cart[i], it will take the values and
+            assign them to the variables
+        */
+        const { name, price, quantity } = cart[i];
+        const total = cart[i].price * cart[i].quantity;
 
-        itemString += `<li> Item: ${cart[i].name} $${cart[i].price} x ${cart[i].quantity} Total: ${total} </li>`;
+        itemString += `
+        <li> 
+        Item: ${name} $${price} x ${quantity} Total: $${total} 
+        <button class="remove" data-name="${name}">Remove</button>
+        </li>`;
     }
 
     totalItems.innerHTML = `You have ${getQuantity()} items in your cart`;
     itemList.innerHTML = itemString;
-    totalCost.innerHTML = `Toal cost: ${cartTotal()}`;
+    totalCartCost.innerHTML = `Toal cost: ${cartTotal()}`;
 }
 
 addItem('Apple', 10);
 addItem('Apple', 10);
 addItem('Orange', 10);
+removeItem('Apple', 1);
 
 showItems();
